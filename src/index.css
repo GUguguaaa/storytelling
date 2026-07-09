@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --purple-deep: #4A1E6D;
+  --purple-main: #6B3FA0;
+  --purple-light: #8B5CF6;
+  --orange-gold: #F59E0B;
+  --orange-warm: #FB923C;
+  --yellow-bright: #FCD34D;
+  --cream-light: #FEF3C7;
+  --pink-soft: #F9A8D4;
+  --text-dark: #1F1729;
+  --text-light: #FEF9EF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Nunito', 'Noto Sans SC', sans-serif;
+  background: linear-gradient(180deg, var(--purple-deep) 0%, var(--purple-main) 50%, var(--purple-deep) 100%);
+  color: var(--text-light);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--orange-gold);
+  color: var(--purple-deep);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--purple-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--orange-gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--orange-warm);
+}
+
+/* Custom scrollbar for firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--orange-gold) var(--purple-deep);
+}
+
+/* Animation classes */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--orange-gold), var(--yellow-bright));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effect */
+.glow-effect {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-effect:hover {
+  box-shadow: 0 0 40px rgba(245, 158, 11, 0.5);
+}
+
+/* Section styles */
+.section-container {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Quote styles */
+.quote-style {
+  font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  font-style: italic;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.quote-style::before {
+  content: '"';
+  position: absolute;
+  left: 0;
+  top: -0.5rem;
+  font-size: 3rem;
+  color: var(--orange-gold);
+  font-family: 'Cinzel Decorative', serif;
+}
+
+/* Card styles */
+
+/* Epitaph styles */
+.tombstone-card {
+  transition: transform 0.3s ease;
+}
+
+.tombstone-card:hover {
+  transform: translateY(-8px);
+}
+
+.tombstone-card .tombstone-body {
+  background: linear-gradient(180deg, #6b6b6b 0%, #4a4a4a 30%, #3d3d3d 100%);
+  border: 3px solid #5a5a5a;
+  border-top: none;
+  border-radius: 0 0 24px 24px;
+  position: relative;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+.tombstone-card .tombstone-arch {
+  background: linear-gradient(180deg, #7a7a7a 0%, #5a5a5a 100%);
+  border: 3px solid #5a5a5a;
+  border-bottom: none;
+  border-radius: 50% 50% 0 0;
+  height: 50px;
+  position: relative;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.tombstone-card .tombstone-arch::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* Petal animation */
+@keyframes petalFall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg) translateX(100px);
+    opacity: 0;
+  }
+}
+
+.petal {
+  position: fixed;
+  pointer-events: none;
+  z-index: 100;
+  animation: petalFall linear infinite;
+}
+
+/* Star background */
+.stars-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Word cloud styles */
+.word-cloud span {
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.word-cloud span:hover {
+  transform: scale(1.1);
+  filter: brightness(1.3);
+}
