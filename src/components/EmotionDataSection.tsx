@@ -60,7 +60,29 @@ const emotionLabelMap: Record<string, string> = {
   love: '感恩', regret: '遗憾', lonely: '孤独', guilt: '愧疚', fear: '恐惧',
 };
 
-const emotionHeatmapColors = ['#1e1b4b', '#312e81', '#4338ca', '#6366f1', '#818cf8', '#a5b4fc', '#c7d2fe', '#e0e7ff', '#eef2ff'];
+const emotionHeatmapLegend = Array.from({ length: 9 }, (_, i) => heatmapCellColor(i / 8, 1, 1));
+
+// 将行内比例映射为半透明色块（越亮越不透明，底色可透出）
+function heatmapCellColor(norm: number, count: number, rowMaxNorm: number): string {
+  if (count <= 0) return 'hsla(235, 35%, 55%, 0.06)';
+
+  const relative = rowMaxNorm > 0 ? norm / rowMaxNorm : norm;
+  const t = Math.min(1, Math.max(Math.pow(relative, 0.5), 0.2));
+  const saturation = 58 + t * 38;
+  const lightness = 58 + t * 22;
+  const alpha = 0.18 + t * 0.62;
+  return `hsla(235, ${saturation}%, ${lightness}%, ${alpha})`;
+}
+
+function heatmapTextClass(norm: number, count: number, rowMaxNorm: number): string {
+  if (count <= 0) return 'text-white/25';
+
+  const relative = rowMaxNorm > 0 ? norm / rowMaxNorm : norm;
+  const t = Math.min(1, Math.max(Math.pow(relative, 0.5), 0.2));
+  if (t >= 0.68) return 'text-amber-50';
+  if (t >= 0.42) return 'text-amber-100';
+  return 'text-amber-100/85';
+}
 
 // Raw text word cloud data (generated from 投稿文本-无评论.txt)
 import wordCloudRaw from '../data/wordcloud.json';
@@ -303,7 +325,7 @@ export default function EmotionDataSection() {
             exit={{ opacity: 0, x: -30 }}
             transition={{ duration: 0.4 }}
           >
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10 min-h-[420px] flex items-center justify-center">
+            <div className="min-h-[420px] flex items-center justify-center">
               <WordCloud data={wordCloudRaw} />
             </div>
 
@@ -324,58 +346,66 @@ export default function EmotionDataSection() {
           >
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10">
               <div className="overflow-x-auto">
-                <table className="w-full text-xs" style={{ minWidth: 700 }}>
+                <table className="w-full text-xs table-fixed" style={{ minWidth: 700 }}>
                   <thead>
                     <tr>
                       <th className="text-left text-amber-100/60 pb-3 pr-4 font-normal w-28">对象</th>
                       {emotionKeys.map((k) => (
-                        <th key={k} className="text-center text-amber-100/60 pb-3 px-1 font-normal">
+                        <th key={k} className="text-center text-amber-100/60 pb-3 px-1 font-normal w-[52px]">
                           {emotionLabelMap[k]}
                         </th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
-                    {normalizedHeatmap.map((row) => (
+                    {normalizedHeatmap.map((row) => {
+                      const rowMaxNorm = Math.max(...emotionKeys.map((key) => row.norm[key] as number));
+                      return (
                       <tr key={row.name} className="group">
                         <td className="py-1.5 pr-4 text-amber-100/80 font-medium">{row.name}</td>
                         {emotionKeys.map((k) => {
                           const norm = row.norm[k] as number;
-                          const idx = Math.min(8, Math.floor(norm * 9));
+                          const count = row[k] as number;
+                          const textClass = heatmapTextClass(norm, count, rowMaxNorm);
                           return (
-                            <td key={k} className="px-1 py-1.5 text-center">
+                            <td key={k} className="p-1 text-center">
                               <div
-                                className="rounded-md px-1 py-1.5 transition-all duration-200 group-hover:ring-1 group-hover:ring-amber-500/40 cursor-default"
-                                style={{ backgroundColor: emotionHeatmapColors[idx] }}
-                                title={`${emotionLabelMap[k]}: ${row[k]} 条`}
+                                className="mx-auto flex items-center justify-center rounded-md border border-white/10 transition-all duration-200 group-hover:ring-1 group-hover:ring-amber-400/30 group-hover:border-amber-400/20 cursor-default"
+                                style={{
+                                  backgroundColor: heatmapCellColor(norm, count, rowMaxNorm),
+                                  width: 52,
+                                  height: 40,
+                                }}
+                                title={`${emotionLabelMap[k]}: ${count} 条`}
                               >
-                                <span className={norm > 0.3 ? 'text-white' : norm > 0.1 ? 'text-white/80' : 'text-white/40'}>
-                                  {norm > 0.02 ? `${(norm * 100).toFixed(0)}%` : ''}
+                                <span className={`text-[11px] leading-none font-medium ${textClass}`}>
+                                  {count > 0 ? `${(norm * 100).toFixed(0)}%` : ''}
                                 </span>
                               </div>
                             </td>
                           );
                         })}
                       </tr>
-                    ))}
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
 
               {/* Color scale */}
               <div className="flex items-center justify-center gap-2 mt-6">
-                <span className="text-amber-100/40 text-xs">低</span>
+                <span className="text-amber-100/40 text-xs">暗</span>
                 <div className="flex gap-0.5">
-                  {emotionHeatmapColors.map((c) => (
-                    <div key={c} className="w-6 h-3 rounded-sm" style={{ backgroundColor: c }} />
+                  {emotionHeatmapLegend.map((c, i) => (
+                    <div key={i} className="w-6 h-3 rounded-sm border border-white/10" style={{ backgroundColor: c }} />
                   ))}
                 </div>
-                <span className="text-amber-100/40 text-xs">高</span>
+                <span className="text-amber-100/40 text-xs">亮</span>
               </div>
             </div>
 
             <p className="text-center text-amber-100/40 text-sm mt-6">
-              每行已归一化；颜色越深，该对象承载此类情感的文本比例越高
+              每行已归一化；颜色越亮，该对象承载此类情感的文本比例越高
             </p>
           </motion.div>
         )}
@@ -413,11 +443,118 @@ interface PlacedWord {
   x: number;
   y: number;
   fontSize: number;
+  fontWeight: number;
   color: string;
+  rotation: number;
 }
 
-// Spiral collision-based layout — words pack around each other without overlap,
-// spreading from the center outward in all directions.
+// Amber 单色系：词频越高越亮越饱和，越低越深沉暗淡
+function colorForFrequency(norm: number): string {
+  const sat = 48 + norm * 42;
+  const light = 34 + norm * 46;
+  return `hsl(38, ${sat.toFixed(0)}%, ${light.toFixed(0)}%)`;
+}
+
+function weightForFrequency(norm: number): number {
+  if (norm >= 0.82) return 700;
+  if (norm >= 0.62) return 600;
+  if (norm >= 0.42) return 500;
+  if (norm >= 0.22) return 400;
+  return 300;
+}
+
+function hashString(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function estimateWordWidth(fontSize: number, name: string, fontWeight = 400) {
+  const weightFactor = fontWeight >= 700 ? 1.08 : fontWeight >= 600 ? 1.05 : fontWeight >= 500 ? 1.02 : 1;
+  return name.length * fontSize * 1.05 * weightFactor;
+}
+
+function wordBox(fontSize: number, name: string, rotation: number, fontWeight = 400) {
+  const textW = estimateWordWidth(fontSize, name, fontWeight);
+  const textH = fontSize * 1.35;
+  const rad = (Math.abs(rotation) * Math.PI) / 180;
+  const cos = Math.cos(rad);
+  const sin = Math.sin(rad);
+  return {
+    textW,
+    textH,
+    boxW: textW * cos + textH * sin,
+    boxH: textW * sin + textH * cos,
+  };
+}
+
+function boxesOverlap(
+  ax: number, ay: number, aFont: number, aName: string, aRot: number, aWeight: number,
+  bx: number, by: number, bFont: number, bName: string, bRot: number, bWeight: number,
+  pad: number,
+) {
+  const a = wordBox(aFont, aName, aRot, aWeight);
+  const b = wordBox(bFont, bName, bRot, bWeight);
+  const acx = ax + a.textW / 2;
+  const acy = ay + a.textH / 2;
+  const bcx = bx + b.textW / 2;
+  const bcy = by + b.textH / 2;
+
+  return (
+    acx - a.boxW / 2 - pad < bcx + b.boxW / 2 + pad &&
+    acx + a.boxW / 2 + pad > bcx - b.boxW / 2 - pad &&
+    acy - a.boxH / 2 - pad < bcy + b.boxH / 2 + pad &&
+    acy + a.boxH / 2 + pad > bcy - b.boxH / 2 - pad
+  );
+}
+
+function blobRadius(angle: number): number {
+  return 1 + 0.14 * Math.cos(angle * 3) + 0.09 * Math.sin(angle * 5);
+}
+
+function centerPlacedWords(placed: PlacedWord[], canvasW: number, canvasH: number): PlacedWord[] {
+  if (placed.length === 0) return placed;
+
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+
+  for (const p of placed) {
+    const w = estimateWordWidth(p.fontSize, p.word.name, p.fontWeight);
+    const h = p.fontSize * 1.35;
+    minX = Math.min(minX, p.x);
+    minY = Math.min(minY, p.y);
+    maxX = Math.max(maxX, p.x + w);
+    maxY = Math.max(maxY, p.y + h);
+  }
+
+  const offsetX = (canvasW - (maxX - minX)) / 2 - minX;
+  const offsetY = (canvasH - (maxY - minY)) / 2 - minY;
+
+  return placed.map((p) => ({ ...p, x: p.x + offsetX, y: p.y + offsetY }));
+}
+
+function insideCloud(
+  px: number,
+  py: number,
+  w: number,
+  h: number,
+  centerX: number,
+  centerY: number,
+  maxRadius: number,
+  edgeLimit: number,
+): boolean {
+  const wordCx = px + w / 2;
+  const wordCy = py + h / 2;
+  const angle = Math.atan2(wordCy - centerY, wordCx - centerX);
+  const blob = blobRadius(angle);
+  const dx = (wordCx - centerX) / (maxRadius * 1.5 * blob);
+  const dy = (wordCy - centerY) / (maxRadius * 0.82 * blob);
+  return dx * dx + dy * dy <= edgeLimit * edgeLimit;
+}
+
+// Elliptical spiral layout — organic blob shape, frequency-driven size/weight/color.
 function layoutCloud(
   words: WordItem[],
   canvasW: number,
@@ -425,82 +562,131 @@ function layoutCloud(
 ): PlacedWord[] {
   const max = Math.max(...words.map((w) => w.value));
   const min = Math.min(...words.map((w) => w.value));
-  const palette = ['#FAF3E0', '#FCD34D', '#F59E0B', '#D97706', '#A78BFA'];
-
-  // Sort largest first so they claim center positions first
   const sorted = [...words].sort((a, b) => b.value - a.value);
-
   const placed: PlacedWord[] = [];
+  const centerX = canvasW / 2;
+  const centerY = canvasH / 2;
+  const maxRadius = Math.min(canvasW, canvasH) * 0.48;
+  const ellipseX = 1.5;
+  const ellipseY = 0.82;
 
-  // Pixel-per-em lookup for Chinese font width estimation
-  function estimateWidth(fontSize: number, name: string) {
-    return name.length * fontSize * 0.9;
+  function collides(px: number, py: number, fontSize: number, name: string, rotation: number, fontWeight: number, pad: number) {
+    return placed.some((p) =>
+      boxesOverlap(px, py, fontSize, name, rotation, fontWeight, p.x, p.y, p.fontSize, p.word.name, p.rotation, p.fontWeight, pad),
+    );
+  }
+
+  function fits(px: number, py: number, w: number, h: number, edgeLimit: number) {
+    if (px < 2 || py < 2 || px + w > canvasW - 2 || py + h > canvasH - 2) return false;
+    return insideCloud(px, py, w, h, centerX, centerY, maxRadius, edgeLimit);
+  }
+
+  function tryPlace(
+    word: WordItem,
+    fontSize: number,
+    w: number,
+    h: number,
+    color: string,
+    fontWeight: number,
+    rotation: number,
+    edgeLimit: number,
+    startRadius: number,
+    maxIter: number,
+  ): boolean {
+    const pad = rotation === 0 ? 3 : 5;
+    let angle = hashString(word.name) * 0.017;
+    let radius = startRadius;
+
+    for (let iter = 0; iter < maxIter; iter++) {
+      const blob = blobRadius(angle);
+      const px = centerX + Math.cos(angle) * radius * ellipseX * blob - w / 2;
+      const py = centerY + Math.sin(angle) * radius * ellipseY * blob - h / 2;
+
+      if (fits(px, py, w, h, edgeLimit) && !collides(px, py, fontSize, word.name, rotation, fontWeight, pad)) {
+        placed.push({ word, x: px, y: py, fontSize, fontWeight, color, rotation });
+        return true;
+      }
+
+      angle += 0.21;
+      radius += 1.5 * (0.35 + iter * 0.001);
+    }
+
+    return false;
+  }
+
+  function tryPerimeterRing(
+    word: WordItem,
+    fontSize: number,
+    w: number,
+    h: number,
+    color: string,
+    fontWeight: number,
+    rotation: number,
+    edgeLimit: number,
+  ): boolean {
+    const pad = rotation === 0 ? 3 : 5;
+    const steps = 128;
+
+    for (let i = 0; i < steps; i++) {
+      const angle = (i / steps) * Math.PI * 2 + hashString(word.name) * 0.01;
+      const blob = blobRadius(angle);
+      const ringX = centerX + Math.cos(angle) * maxRadius * ellipseX * blob * edgeLimit;
+      const ringY = centerY + Math.sin(angle) * maxRadius * ellipseY * blob * edgeLimit;
+      const px = ringX - w / 2;
+      const py = ringY - h / 2;
+
+      if (fits(px, py, w, h, edgeLimit + 0.04) && !collides(px, py, fontSize, word.name, rotation, fontWeight, pad)) {
+        placed.push({ word, x: px, y: py, fontSize, fontWeight, color, rotation });
+        return true;
+      }
+    }
+
+    return false;
   }
 
   for (const word of sorted) {
     const norm = max === min ? 0.5 : (word.value - min) / (max - min);
-    const fontSize = 12 + norm * 28;
-    const w = estimateWidth(fontSize, word.name);
-    const h = fontSize * 1.3;
-    const color = palette[Math.min(palette.length - 1, Math.floor(norm * palette.length))];
+    const fontSize = 9 + norm * 28;
+    const fontWeight = weightForFrequency(norm);
+    const w = estimateWordWidth(fontSize, word.name, fontWeight);
+    const h = fontSize * 1.35;
+    const color = colorForFrequency(norm);
+    const rotation = norm > 0.55 ? 0 : ((hashString(word.name) % 25) - 12);
 
-    let placedFlag = false;
+    const placedFlag =
+      tryPlace(word, fontSize, w, h, color, fontWeight, rotation, 1.0, 0, 2800) ||
+      tryPlace(word, fontSize, w, h, color, fontWeight, rotation, 1.06, maxRadius * 0.3, 1600) ||
+      tryPlace(word, fontSize, w, h, color, fontWeight, rotation, 1.12, maxRadius * 0.55, 1200) ||
+      tryPerimeterRing(word, fontSize, w, h, color, fontWeight, rotation, 1.04) ||
+      tryPerimeterRing(word, fontSize, w, h, color, fontWeight, rotation, 1.1);
 
-    // Spiral outward from center
-    let angle = 0;
-    let radius = 0;
-    const STEP = 2;
-    const MAX_ITER = 800;
-
-    for (let iter = 0; iter < MAX_ITER; iter++) {
-      const cx = canvasW / 2 + Math.cos(angle) * radius - w / 2;
-      const cy = canvasH / 2 + Math.sin(angle) * radius - h / 2;
-
-      // Clamp to canvas bounds
-      const px = Math.max(0, Math.min(canvasW - w, cx));
-      const py = Math.max(0, Math.min(canvasH - h, cy));
-
-      // Check AABB collision with all placed words (with 1px padding)
-      const collides = placed.some((p) => {
-        const pw = estimateWidth(p.fontSize, p.word.name);
-        const ph = p.fontSize * 1.3;
-        const pad = 1;
-        return px < p.x + pw + pad && px + w + pad > p.x && py < p.y + ph + pad && py + h + pad > p.y;
-      });
-
-      if (!collides) {
-        placed.push({ word, x: px, y: py, fontSize, color });
-        placedFlag = true;
-        break;
-      }
-
-      angle += 0.25;
-      radius += STEP * (0.5 + iter * 0.001);
-    }
-
-    // Fallback if no position found
-    if (!placedFlag) {
-      placed.push({
-        word,
-        x: canvasW / 2 - w / 2,
-        y: canvasH / 2 - h / 2,
-        fontSize,
-        color,
-      });
-    }
+    if (!placedFlag) continue;
   }
 
-  return placed;
+  return centerPlacedWords(placed, canvasW, canvasH);
 }
 
 function WordCloud({ data }: { data: WordItem[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [layout, setLayout] = useState<PlacedWord[]>([]);
+  const [canvasSize, setCanvasSize] = useState({ w: 820, h: 400 });
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const placed = layoutCloud(data, 820, 380);
-    setLayout(placed);
+    const el = containerRef.current;
+    if (!el) return;
+
+    const updateLayout = () => {
+      const w = el.clientWidth || 820;
+      const h = Math.min(480, Math.max(380, w * 0.52));
+      setCanvasSize({ w, h });
+      setLayout(layoutCloud(data, w, h));
+    };
+
+    updateLayout();
+    const observer = new ResizeObserver(updateLayout);
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [data]);
 
   useEffect(() => {
@@ -512,30 +698,35 @@ function WordCloud({ data }: { data: WordItem[] }) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full"
-      style={{ height: 380 }}
+      className="relative w-full flex items-center justify-center"
+      style={{ minHeight: 400 }}
     >
-      {layout.map((item, i) => (
-        <motion.span
-          key={item.word.name}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={visible ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.5, delay: i * 0.018, ease: 'easeOut' }}
-          className="absolute cursor-default select-none"
-          style={{
-            left: item.x,
-            top: item.y,
-            fontSize: item.fontSize,
-            color: item.color,
-            lineHeight: 1.3,
-            whiteSpace: 'nowrap',
-            fontFamily: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif',
-          }}
-          title={`${item.word.name}: ${item.word.value} 次`}
-        >
-          {item.word.name}
-        </motion.span>
-      ))}
+      <div className="relative" style={{ width: canvasSize.w, height: canvasSize.h }}>
+        {layout.map((item, i) => (
+          <motion.span
+            key={item.word.name}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={visible ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.5, delay: i * 0.018, ease: 'easeOut' }}
+            className="absolute cursor-default select-none word-cloud-word"
+            style={{
+              left: item.x,
+              top: item.y,
+              fontSize: item.fontSize,
+              fontWeight: item.fontWeight,
+              color: item.color,
+              lineHeight: 1.35,
+              whiteSpace: 'nowrap',
+              transform: `rotate(${item.rotation}deg)`,
+              transformOrigin: 'center center',
+              fontFamily: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif',
+            }}
+            title={`${item.word.name}: ${item.word.value} 次`}
+          >
+            {item.word.name}
+          </motion.span>
+        ))}
+      </div>
     </div>
   );
 }

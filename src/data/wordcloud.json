@@ -1,97 +1,878 @@
 [
-  { "name": "思念", "value": 264 },
-  { "name": "想念", "value": 277 },
-  { "name": "怀念", "value": 163 },
-  { "name": "去世", "value": 1103 },
-  { "name": "离开", "value": 1965 },
-  { "name": "死亡", "value": 1094 },
-  { "name": "死去", "value": 412 },
-  { "name": "离世", "value": 221 },
-  { "name": "告别", "value": 157 },
-  { "name": "再见", "value": 398 },
-  { "name": "记得", "value": 2028 },
-  { "name": "忘记", "value": 682 },
-  { "name": "回忆", "value": 467 },
-  { "name": "记忆", "value": 823 },
-  { "name": "想起", "value": 1458 },
-  { "name": "梦见", "value": 189 },
-  { "name": "梦到", "value": 112 },
-  { "name": "梦里", "value": 891 },
-  { "name": "梦境", "value": 83 },
-  { "name": "眼泪", "value": 896 },
-  { "name": "哭泣", "value": 45 },
-  { "name": "难过", "value": 611 },
-  { "name": "悲伤", "value": 311 },
-  { "name": "痛苦", "value": 1066 },
-  { "name": "愧疚", "value": 121 },
-  { "name": "自责", "value": 89 },
-  { "name": "遗憾", "value": 234 },
-  { "name": "后悔", "value": 156 },
-  { "name": "害怕", "value": 673 },
-  { "name": "恐惧", "value": 78 },
-  { "name": "孤独", "value": 145 },
-  { "name": "无助", "value": 134 },
-  { "name": "愤怒", "value": 67 },
-  { "name": "怨恨", "value": 45 },
-  { "name": "感激", "value": 98 },
-  { "name": "爱意", "value": 112 },
-  { "name": "释然", "value": 67 },
-  { "name": "祝福", "value": 89 },
-  { "name": "希望", "value": 1319 },
-  { "name": "幸福", "value": 732 },
-  { "name": "喜欢", "value": 1867 },
-  { "name": "妈妈", "value": 4298 },
-  { "name": "爸爸", "value": 2043 },
-  { "name": "爷爷", "value": 2747 },
-  { "name": "奶奶", "value": 2712 },
-  { "name": "姥姥", "value": 1138 },
-  { "name": "姥爷", "value": 853 },
-  { "name": "外婆", "value": 1070 },
-  { "name": "外公", "value": 1085 },
-  { "name": "姐姐", "value": 800 },
-  { "name": "哥哥", "value": 312 },
-  { "name": "弟弟", "value": 189 },
-  { "name": "妹妹", "value": 167 },
-  { "name": "孩子", "value": 941 },
-  { "name": "朋友", "value": 1506 },
-  { "name": "同学", "value": 441 },
-  { "name": "老师", "value": 519 },
-  { "name": "室友", "value": 56 },
-  { "name": "邻居", "value": 34 },
-  { "name": "小狗", "value": 798 },
-  { "name": "猫咪", "value": 445 },
-  { "name": "猫猫", "value": 621 },
-  { "name": "仓鼠", "value": 112 },
-  { "name": "宠物", "value": 234 },
-  { "name": "味道", "value": 445 },
-  { "name": "声音", "value": 567 },
-  { "name": "照片", "value": 611 },
-  { "name": "日记", "value": 234 },
-  { "name": "礼物", "value": 123 },
-  { "name": "电话", "value": 796 },
-  { "name": "消息", "value": 566 },
-  { "name": "生日", "value": 667 },
-  { "name": "医院", "value": 804 },
-  { "name": "坟墓", "value": 89 },
-  { "name": "墓碑", "value": 56 },
-  { "name": "童年", "value": 345 },
-  { "name": "青春", "value": 234 },
-  { "name": "校园", "value": 178 },
-  { "name": "家里", "value": 1321 },
-  { "name": "学校", "value": 456 },
-  { "name": "长大", "value": 652 },
-  { "name": "小时候", "value": 924 },
-  { "name": "以前", "value": 567 },
-  { "name": "回来", "value": 1133 },
-  { "name": "看见", "value": 345 },
-  { "name": "看到", "value": 1818 },
-  { "name": "好想", "value": 1300 },
-  { "name": "永远", "value": 1231 },
-  { "name": "消失", "value": 273 },
-  { "name": "不见", "value": 234 },
-  { "name": "世界", "value": 1143 },
-  { "name": "一切", "value": 898 },
-  { "name": "烧纸", "value": 23 },
-  { "name": "祭拜", "value": 34 },
-  { "name": "纪念", "value": 67 }
+  {
+    "name": "妈妈",
+    "value": 4264
+  },
+  {
+    "name": "爷爷",
+    "value": 2723
+  },
+  {
+    "name": "奶奶",
+    "value": 2686
+  },
+  {
+    "name": "爸爸",
+    "value": 2028
+  },
+  {
+    "name": "记得",
+    "value": 2028
+  },
+  {
+    "name": "最后",
+    "value": 2304
+  },
+  {
+    "name": "喜欢",
+    "value": 1867
+  },
+  {
+    "name": "姥姥",
+    "value": 1066
+  },
+  {
+    "name": "离开",
+    "value": 1965
+  },
+  {
+    "name": "外公",
+    "value": 1085
+  },
+  {
+    "name": "看到",
+    "value": 1817
+  },
+  {
+    "name": "朋友",
+    "value": 1506
+  },
+  {
+    "name": "外婆",
+    "value": 1070
+  },
+  {
+    "name": "想起",
+    "value": 1458
+  },
+  {
+    "name": "叫",
+    "value": 1303
+  },
+  {
+    "name": "那天",
+    "value": 1456
+  },
+  {
+    "name": "走了",
+    "value": 1484
+  },
+  {
+    "name": "家里",
+    "value": 1320
+  },
+  {
+    "name": "姥爷",
+    "value": 853
+  },
+  {
+    "name": "好想",
+    "value": 1293
+  },
+  {
+    "name": "希望",
+    "value": 1319
+  },
+  {
+    "name": "回家",
+    "value": 1213
+  },
+  {
+    "name": "永远",
+    "value": 1231
+  },
+  {
+    "name": "念",
+    "value": 1217
+  },
+  {
+    "name": "告诉",
+    "value": 1145
+  },
+  {
+    "name": "回来",
+    "value": 1133
+  },
+  {
+    "name": "去世",
+    "value": 1102
+  },
+  {
+    "name": "世界",
+    "value": 1143
+  },
+  {
+    "name": "小狗",
+    "value": 798
+  },
+  {
+    "name": "死亡",
+    "value": 1090
+  },
+  {
+    "name": "痛苦",
+    "value": 1066
+  },
+  {
+    "name": "孩子",
+    "value": 941
+  },
+  {
+    "name": "姐姐",
+    "value": 790
+  },
+  {
+    "name": "那时",
+    "value": 928
+  },
+  {
+    "name": "小时候",
+    "value": 924
+  },
+  {
+    "name": "猫猫",
+    "value": 613
+  },
+  {
+    "name": "梦里",
+    "value": 891
+  },
+  {
+    "name": "电话",
+    "value": 796
+  },
+  {
+    "name": "眼泪",
+    "value": 896
+  },
+  {
+    "name": "医院",
+    "value": 803
+  },
+  {
+    "name": "一切",
+    "value": 898
+  },
+  {
+    "name": "以后",
+    "value": 888
+  },
+  {
+    "name": "记忆",
+    "value": 823
+  },
+  {
+    "name": "学校",
+    "value": 732
+  },
+  {
+    "name": "生日",
+    "value": 666
+  },
+  {
+    "name": "宝宝",
+    "value": 695
+  },
+  {
+    "name": "看见",
+    "value": 749
+  },
+  {
+    "name": "幸福",
+    "value": 732
+  },
+  {
+    "name": "害怕",
+    "value": 673
+  },
+  {
+    "name": "生命",
+    "value": 699
+  },
+  {
+    "name": "忘记",
+    "value": 682
+  },
+  {
+    "name": "长大",
+    "value": 650
+  },
+  {
+    "name": "以前",
+    "value": 651
+  },
+  {
+    "name": "照片",
+    "value": 611
+  },
+  {
+    "name": "难过",
+    "value": 611
+  },
+  {
+    "name": "老家",
+    "value": 545
+  },
+  {
+    "name": "声音",
+    "value": 628
+  },
+  {
+    "name": "老师",
+    "value": 518
+  },
+  {
+    "name": "爸妈",
+    "value": 551
+  },
+  {
+    "name": "哥哥",
+    "value": 461
+  },
+  {
+    "name": "活着",
+    "value": 596
+  },
+  {
+    "name": "消息",
+    "value": 566
+  },
+  {
+    "name": "喊",
+    "value": 532
+  },
+  {
+    "name": "曾经",
+    "value": 550
+  },
+  {
+    "name": "父母",
+    "value": 495
+  },
+  {
+    "name": "日子",
+    "value": 516
+  },
+  {
+    "name": "家人",
+    "value": 490
+  },
+  {
+    "name": "人生",
+    "value": 493
+  },
+  {
+    "name": "同学",
+    "value": 441
+  },
+  {
+    "name": "梦到",
+    "value": 448
+  },
+  {
+    "name": "回忆",
+    "value": 467
+  },
+  {
+    "name": "下辈子",
+    "value": 477
+  },
+  {
+    "name": "后悔",
+    "value": 435
+  },
+  {
+    "name": "房间",
+    "value": 425
+  },
+  {
+    "name": "死去",
+    "value": 411
+  },
+  {
+    "name": "再见",
+    "value": 398
+  },
+  {
+    "name": "女儿",
+    "value": 343
+  },
+  {
+    "name": "妹妹",
+    "value": 344
+  },
+  {
+    "name": "路上",
+    "value": 377
+  },
+  {
+    "name": "门口",
+    "value": 370
+  },
+  {
+    "name": "弟弟",
+    "value": 322
+  },
+  {
+    "name": "不见",
+    "value": 350
+  },
+  {
+    "name": "悲伤",
+    "value": 311
+  },
+  {
+    "name": "梦见",
+    "value": 297
+  },
+  {
+    "name": "夏天",
+    "value": 298
+  },
+  {
+    "name": "老公",
+    "value": 254
+  },
+  {
+    "name": "冬天",
+    "value": 293
+  },
+  {
+    "name": "舅舅",
+    "value": 240
+  },
+  {
+    "name": "精神",
+    "value": 281
+  },
+  {
+    "name": "视频",
+    "value": 274
+  },
+  {
+    "name": "想念",
+    "value": 277
+  },
+  {
+    "name": "过年",
+    "value": 270
+  },
+  {
+    "name": "亲人",
+    "value": 273
+  },
+  {
+    "name": "狗狗",
+    "value": 230
+  },
+  {
+    "name": "消失",
+    "value": 273
+  },
+  {
+    "name": "儿子",
+    "value": 243
+  },
+  {
+    "name": "思念",
+    "value": 264
+  },
+  {
+    "name": "那年",
+    "value": 251
+  },
+  {
+    "name": "伤心",
+    "value": 234
+  },
+  {
+    "name": "灵魂",
+    "value": 238
+  },
+  {
+    "name": "阿姨",
+    "value": 198
+  },
+  {
+    "name": "孙女",
+    "value": 211
+  },
+  {
+    "name": "不在了",
+    "value": 220
+  },
+  {
+    "name": "遗憾",
+    "value": 213
+  },
+  {
+    "name": "童年",
+    "value": 190
+  },
+  {
+    "name": "叔叔",
+    "value": 163
+  },
+  {
+    "name": "味道",
+    "value": 173
+  },
+  {
+    "name": "凌晨",
+    "value": 174
+  },
+  {
+    "name": "姑姑",
+    "value": 156
+  },
+  {
+    "name": "愧疚",
+    "value": 160
+  },
+  {
+    "name": "温暖",
+    "value": 170
+  },
+  {
+    "name": "怀念",
+    "value": 163
+  },
+  {
+    "name": "陪伴",
+    "value": 164
+  },
+  {
+    "name": "时光",
+    "value": 163
+  },
+  {
+    "name": "温柔",
+    "value": 160
+  },
+  {
+    "name": "天堂",
+    "value": 159
+  },
+  {
+    "name": "春天",
+    "value": 146
+  },
+  {
+    "name": "告别",
+    "value": 157
+  },
+  {
+    "name": "没了",
+    "value": 156
+  },
+  {
+    "name": "拥抱",
+    "value": 154
+  },
+  {
+    "name": "病房",
+    "value": 136
+  },
+  {
+    "name": "宠物",
+    "value": 135
+  },
+  {
+    "name": "哭泣",
+    "value": 139
+  },
+  {
+    "name": "恐惧",
+    "value": 137
+  },
+  {
+    "name": "小鸟",
+    "value": 115
+  },
+  {
+    "name": "骨灰",
+    "value": 133
+  },
+  {
+    "name": "兔子",
+    "value": 109
+  },
+  {
+    "name": "离世",
+    "value": 124
+  },
+  {
+    "name": "礼物",
+    "value": 122
+  },
+  {
+    "name": "墓碑",
+    "value": 114
+  },
+  {
+    "name": "孤独",
+    "value": 112
+  },
+  {
+    "name": "邻居",
+    "value": 112
+  },
+  {
+    "name": "宝贝",
+    "value": 103
+  },
+  {
+    "name": "从前",
+    "value": 107
+  },
+  {
+    "name": "车上",
+    "value": 103
+  },
+  {
+    "name": "客厅",
+    "value": 95
+  },
+  {
+    "name": "人间",
+    "value": 98
+  },
+  {
+    "name": "爱人",
+    "value": 89
+  },
+  {
+    "name": "命运",
+    "value": 92
+  },
+  {
+    "name": "等待",
+    "value": 96
+  },
+  {
+    "name": "妻子",
+    "value": 83
+  },
+  {
+    "name": "祈祷",
+    "value": 81
+  },
+  {
+    "name": "祝福",
+    "value": 81
+  },
+  {
+    "name": "日记",
+    "value": 75
+  },
+  {
+    "name": "烧纸",
+    "value": 81
+  },
+  {
+    "name": "来世",
+    "value": 76
+  },
+  {
+    "name": "姨妈",
+    "value": 62
+  },
+  {
+    "name": "深夜",
+    "value": 74
+  },
+  {
+    "name": "孙子",
+    "value": 70
+  },
+  {
+    "name": "猫咪",
+    "value": 68
+  },
+  {
+    "name": "不舍",
+    "value": 72
+  },
+  {
+    "name": "仓鼠",
+    "value": 62
+  },
+  {
+    "name": "泪流",
+    "value": 71
+  },
+  {
+    "name": "厨房",
+    "value": 66
+  },
+  {
+    "name": "丈夫",
+    "value": 62
+  },
+  {
+    "name": "秋天",
+    "value": 63
+  },
+  {
+    "name": "路边",
+    "value": 62
+  },
+  {
+    "name": "纸钱",
+    "value": 58
+  },
+  {
+    "name": "墓地",
+    "value": 60
+  },
+  {
+    "name": "语音",
+    "value": 58
+  },
+  {
+    "name": "春节",
+    "value": 58
+  },
+  {
+    "name": "灵堂",
+    "value": 58
+  },
+  {
+    "name": "过世",
+    "value": 58
+  },
+  {
+    "name": "青春",
+    "value": 58
+  },
+  {
+    "name": "坟墓",
+    "value": 56
+  },
+  {
+    "name": "无助",
+    "value": 53
+  },
+  {
+    "name": "纪念",
+    "value": 52
+  },
+  {
+    "name": "落泪",
+    "value": 52
+  },
+  {
+    "name": "爱意",
+    "value": 49
+  },
+  {
+    "name": "自责",
+    "value": 50
+  },
+  {
+    "name": "人走",
+    "value": 48
+  },
+  {
+    "name": "校园",
+    "value": 45
+  },
+  {
+    "name": "岁月",
+    "value": 44
+  },
+  {
+    "name": "清明",
+    "value": 43
+  },
+  {
+    "name": "愤怒",
+    "value": 42
+  },
+  {
+    "name": "饭菜",
+    "value": 39
+  },
+  {
+    "name": "守护",
+    "value": 39
+  },
+  {
+    "name": "怨恨",
+    "value": 38
+  },
+  {
+    "name": "老婆",
+    "value": 34
+  },
+  {
+    "name": "余生",
+    "value": 35
+  },
+  {
+    "name": "轮回",
+    "value": 35
+  },
+  {
+    "name": "蜡烛",
+    "value": 33
+  },
+  {
+    "name": "舍友",
+    "value": 32
+  },
+  {
+    "name": "悼念",
+    "value": 33
+  },
+  {
+    "name": "挂念",
+    "value": 31
+  },
+  {
+    "name": "室友",
+    "value": 30
+  },
+  {
+    "name": "祭拜",
+    "value": 30
+  },
+  {
+    "name": "惋惜",
+    "value": 30
+  },
+  {
+    "name": "梦境",
+    "value": 30
+  },
+  {
+    "name": "车站",
+    "value": 29
+  },
+  {
+    "name": "老爸",
+    "value": 25
+  },
+  {
+    "name": "牵挂",
+    "value": 27
+  },
+  {
+    "name": "寄托",
+    "value": 26
+  },
+  {
+    "name": "心痛",
+    "value": 25
+  },
+  {
+    "name": "往事",
+    "value": 21
+  },
+  {
+    "name": "鲜花",
+    "value": 20
+  },
+  {
+    "name": "哀悼",
+    "value": 20
+  },
+  {
+    "name": "伯伯",
+    "value": 19
+  },
+  {
+    "name": "释然",
+    "value": 19
+  },
+  {
+    "name": "病逝",
+    "value": 16
+  },
+  {
+    "name": "撒手",
+    "value": 13
+  },
+  {
+    "name": "感恩",
+    "value": 13
+  },
+  {
+    "name": "恋人",
+    "value": 12
+  },
+  {
+    "name": "感激",
+    "value": 12
+  },
+  {
+    "name": "祝愿",
+    "value": 12
+  },
+  {
+    "name": "逝世",
+    "value": 11
+  },
+  {
+    "name": "心碎",
+    "value": 11
+  },
+  {
+    "name": "金毛",
+    "value": 11
+  },
+  {
+    "name": "痛心",
+    "value": 10
+  },
+  {
+    "name": "老妈",
+    "value": 9
+  },
+  {
+    "name": "往生",
+    "value": 9
+  },
+  {
+    "name": "握手",
+    "value": 9
+  },
+  {
+    "name": "夭折",
+    "value": 8
+  },
+  {
+    "name": "灵位",
+    "value": 7
+  },
+  {
+    "name": "课堂",
+    "value": 7
+  },
+  {
+    "name": "伴侣",
+    "value": 6
+  },
+  {
+    "name": "惦念",
+    "value": 6
+  },
+  {
+    "name": "哀思",
+    "value": 5
+  },
+  {
+    "name": "毛孩子",
+    "value": 3
+  }
 ]

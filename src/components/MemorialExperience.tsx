@@ -590,7 +590,7 @@ const PlaqueScene = () => {
           </svg>
           <div className="absolute inset-0 flex items-center justify-center px-8">
             <p className="text-slate-800 text-sm font-serif text-center leading-relaxed">
-              {text || '铭 待 刻'}
+              {text || '待 铭 刻'}
             </p>
           </div>
           {polished && (
